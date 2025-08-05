@@ -1,5 +1,5 @@
 import os
-from agents import Agent, OpenAIChatCompletionsModel, Runner, set_tracing_disabled
+from agents import Agent, OpenAIChatCompletionsModel, set_tracing_disabled
 from openai import AsyncAzureOpenAI
 from azure.identity.aio import DefaultAzureCredential
 from azure.identity.aio import get_bearer_token_provider
@@ -26,13 +26,29 @@ haiku_agent = Agent(
 )
 
 
-# if __name__ == "__main__":
-#     import asyncio
+english_paragraph_writer_agent = Agent(
+    name="English Paragraph Writer Agent",
+    instructions="You are an expert paragraph writer. Write a detailed paragraph based on the user's input.",
+    model=OpenAIChatCompletionsModel(
+        model=deployment,
+        openai_client=client,
+    )
+)
 
-#     async def main():
-#         result = await Runner.run(agent, "What is the capital of France?")
-#         print(result.final_output)
-#         print(result.to_input_list())
-        
+french_translator_agent = Agent(
+    name="French Translator Agent",
+    instructions="You are a French translator. Translate the user's input into French.",
+    model=OpenAIChatCompletionsModel(
+        model=deployment,
+        openai_client=client,
+    )
+)
 
-    # asyncio.run(main())
+spanish_translator_agent = Agent(
+    name="Spanish Translator Agent",
+    instructions="You are a Spanish translator. Translate the user's input into Spanish.",
+    model=OpenAIChatCompletionsModel(
+        model=deployment,
+        openai_client=client,
+    )
+)
