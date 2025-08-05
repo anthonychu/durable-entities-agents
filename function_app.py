@@ -6,7 +6,7 @@ from my_agents import haiku_agent, english_paragraph_writer_agent, french_transl
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
-add_agents(app=app, agents={
+add_agents(app, agents={
     "haiku_agent": haiku_agent,
     "english_paragraph_writer_agent": english_paragraph_writer_agent,
     "french_translator_agent": french_translator_agent,

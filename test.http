@@ -1,0 +1,31 @@
+# Make a call to an agent by the agent name and a session ID
+
+POST http://localhost:7071/api/run_agent/haiku_agent/12345
+Content-Type: application/json
+
+"What's the capital of Canada?"
+
+###
+
+# Subsequent calls to the same agent session maintains history
+
+POST http://localhost:7071/api/run_agent/haiku_agent/12345
+Content-Type: application/json
+
+"What about the country to the south?"
+
+###
+
+POST http://localhost:7071/api/run_agent/haiku_agent/12345
+Content-Type: application/json
+
+"And France?"
+
+###
+# Start an orchestration to write a paragraph in a few languages
+
+POST http://localhost:7071/runtime/webhooks/durabletask/orchestrators/multilingual_writer_orchestrator
+Content-Type: application/json
+
+"\"things to do in seattle\""
+
