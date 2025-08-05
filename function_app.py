@@ -18,6 +18,8 @@ add_agents(app, agents={
 })
 
 
+# Orchestration of multiple agents
+# Write a paragraph in English and fan out to translate to French and Spanish
 @app.orchestration_trigger(context_name="context")
 def multilingual_writer_orchestrator(context: df.DurableOrchestrationContext):
     input = context.get_input()
