@@ -16,39 +16,32 @@ client = AsyncAzureOpenAI(
     azure_ad_token_provider=get_bearer_token_provider(credentials, "https://cognitiveservices.azure.com/.default"),
 )
 
+model = OpenAIChatCompletionsModel(
+    model=deployment,
+    openai_client=client,
+)
+
 haiku_agent = Agent(
     name="Haiku agent",
     instructions="You are a haiku poet. Respond to the user's question with a haiku.",
-    model=OpenAIChatCompletionsModel(
-        model=deployment,
-        openai_client=client,
-    )
+    model=model
 )
 
 
 english_paragraph_writer_agent = Agent(
     name="English Paragraph Writer Agent",
     instructions="You are an expert paragraph writer. Write a detailed paragraph based on the user's input.",
-    model=OpenAIChatCompletionsModel(
-        model=deployment,
-        openai_client=client,
-    )
+    model=model
 )
 
 french_translator_agent = Agent(
     name="French Translator Agent",
     instructions="You are a French translator. Translate the user's input into French.",
-    model=OpenAIChatCompletionsModel(
-        model=deployment,
-        openai_client=client,
-    )
+    model=model
 )
 
 spanish_translator_agent = Agent(
     name="Spanish Translator Agent",
     instructions="You are a Spanish translator. Translate the user's input into Spanish.",
-    model=OpenAIChatCompletionsModel(
-        model=deployment,
-        openai_client=client,
-    )
+    model=model
 )
