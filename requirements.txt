@@ -1,0 +1,6 @@
+openai-agents>=0.2.4
+azure-identity
+aiohttp
+python-dotenv
+azure-functions
+azure-functions-durable
