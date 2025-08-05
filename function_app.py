@@ -6,6 +6,10 @@ from my_agents import haiku_agent, english_paragraph_writer_agent, french_transl
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
+
+# Register agents
+# Add Durable Entities and Functions to run the agents
+# Add an HTTP function for running agents
 add_agents(app, agents={
     "haiku_agent": haiku_agent,
     "english_paragraph_writer_agent": english_paragraph_writer_agent,
