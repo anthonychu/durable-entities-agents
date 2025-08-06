@@ -1,5 +1,7 @@
+import asyncio
 import os
 from agents import Agent, OpenAIChatCompletionsModel, set_tracing_disabled
+from agents.mcp import MCPServerStreamableHttp
 from openai import AsyncAzureOpenAI
 from azure.identity.aio import DefaultAzureCredential
 from azure.identity.aio import get_bearer_token_provider
@@ -45,3 +47,28 @@ spanish_translator_agent = Agent(
     instructions="You are a Spanish translator. Translate the user's input into Spanish.",
     model=model
 )
+
+
+_weather_mcp = MCPServerStreamableHttp(
+    params={
+        "url": os.getenv("WEATHER_MCP_URL", ""),
+    },
+    cache_tools_list=True,
+    client_session_timeout_seconds=60,
+)
+
+try:
+    loop = asyncio.get_running_loop()
+    # If we're in an async context, create a task
+    asyncio.create_task(_weather_mcp.connect())
+except RuntimeError:
+    # If no event loop is running, use run_until_complete
+    asyncio.run(_weather_mcp.connect())
+
+weather_agent = Agent(
+    name="Weather Agent",
+    instructions="You are an expert in weather information.",
+    model=model,
+    mcp_servers=[_weather_mcp],
+)
+

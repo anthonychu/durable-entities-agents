@@ -29,3 +29,17 @@ Content-Type: application/json
 
 "\"things to do in seattle\""
 
+###
+
+POST http://localhost:7071/api/run_agent/weather_agent/3456789
+Content-Type: application/json
+
+"how warm is it in seattle?"
+
+
+###
+
+POST http://localhost:7071/api/run_agent/weather_agent/3456789
+Content-Type: application/json
+
+"in celsius?"

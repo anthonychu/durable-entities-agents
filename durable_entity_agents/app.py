@@ -78,7 +78,7 @@ async def agent_run_http(req: func.HttpRequest, client: df.DurableOrchestrationC
         "operation_input": input_data
     })
 
-    result = await client.wait_for_completion_or_create_check_status_response(req, instance_id, timeout_in_milliseconds=30000)
+    result = await client.wait_for_completion_or_create_check_status_response(req, instance_id, timeout_in_milliseconds=180000)
     return result
 
 

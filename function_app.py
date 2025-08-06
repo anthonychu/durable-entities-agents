@@ -1,7 +1,7 @@
 import azure.functions as func
 import azure.durable_functions as df
 from durable_entity_agents import run_agent, add_agents
-from my_agents import haiku_agent, english_paragraph_writer_agent, french_translator_agent, spanish_translator_agent
+from my_agents import haiku_agent, english_paragraph_writer_agent, french_translator_agent, spanish_translator_agent, weather_agent
 
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
@@ -14,7 +14,8 @@ add_agents(app, agents={
     "haiku_agent": haiku_agent,
     "english_paragraph_writer_agent": english_paragraph_writer_agent,
     "french_translator_agent": french_translator_agent,
-    "spanish_translator_agent": spanish_translator_agent
+    "spanish_translator_agent": spanish_translator_agent,
+    "weather_agent": weather_agent,
 })
 
 
