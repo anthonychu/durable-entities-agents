@@ -19,6 +19,8 @@ A light-weight SDK for running distributed, stateful OpenAI Agents SDK agents on
 
 ### Adding New Agents
 
+For a single agent, almost no knowledge of Azure Functions is needed.
+
 1. Build an agent using the OpenAI Agents SDK
 
     ```python
@@ -49,7 +51,7 @@ A light-weight SDK for running distributed, stateful OpenAI Agents SDK agents on
     - Add the necessary Durable Functions and Durable Entities behind the scenes. Also enables
     - Enable an HTTP endpoint for interacting with the agent
 
-3. Call the agent in a session called `session123` using the HTTP built-in endpoint:
+3. Call the agent using the HTTP built-in endpoint. Specify the conversation session ID. If the session doesn't exist, it'll automatically create one:
 
     ```http
     POST http://localhost:7071/api/run_agent/haiku_agent/session123
@@ -66,7 +68,7 @@ A light-weight SDK for running distributed, stateful OpenAI Agents SDK agents on
     Capital's heartbeat.
     ```
 
-4. Make a follow-up request in the same session, it remembers that we're talking about the capital of Canada:
+4. Make a follow-up request in the same session, it remembers that we're talking about the capital of Canada and responds with that context:
 
     ```http
     POST http://localhost:7071/api/run_agent/haiku_agent/session123
@@ -84,6 +86,8 @@ A light-weight SDK for running distributed, stateful OpenAI Agents SDK agents on
     ```
 
 ### Orchestrating Agents
+
+To orchestrate multiple agents, use a standard Durable Functions orchestration with the `run_agent` function.
 
 1. Register agents:
 
