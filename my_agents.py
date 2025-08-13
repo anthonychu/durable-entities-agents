@@ -57,14 +57,6 @@ _weather_mcp = MCPServerStreamableHttp(
     client_session_timeout_seconds=60,
 )
 
-try:
-    loop = asyncio.get_running_loop()
-    # If we're in an async context, create a task
-    asyncio.create_task(_weather_mcp.connect())
-except RuntimeError:
-    # If no event loop is running, use run_until_complete
-    asyncio.run(_weather_mcp.connect())
-
 weather_agent = Agent(
     name="Weather Agent",
     instructions="You are an expert in weather information.",

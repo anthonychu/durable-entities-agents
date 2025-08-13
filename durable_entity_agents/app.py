@@ -1,7 +1,8 @@
 import asyncio
 import logging
 import uuid
-from agents import Agent, Runner
+from agents import Agent, RunResult, Runner
+from agents.mcp.server import MCPServer
 import azure.functions as func
 import azure.durable_functions as df
 from azure.durable_functions.models import TaskBase
@@ -43,13 +44,29 @@ def agent(context: df.DurableEntityContext) -> None:
         session = InMemorySession(session_data)
         input = context.get_input() or ""
 
-        result = asyncio.run(Runner.run(agent, input, session=session))
+        result = asyncio.run(_run_agent(agent, input, session=session))
         logging.info(f"Operation result: {result.final_output}")
         context.set_result(result.final_output)
         state["session_data"] = session.get_items_sync()
     
     context.set_state(state)
 
+async def _run_agent(agent: Agent, input: str, session: InMemorySession) -> RunResult:
+    connected_servers: list[MCPServer] = []
+    for server in agent.mcp_servers:
+        try:
+            await server.connect()
+            connected_servers.append(server)
+        except Exception as e:
+            logging.warning(f"Failed to connect to MCP server {server}: {e}")
+
+    try:
+        result = await Runner.run(agent, input, session=session)
+    finally:
+        for server in connected_servers:
+            await server.cleanup()
+
+    return result
 
 # Orchestrator to call an agent entity and get the result of the run
 def agent_run_orchestrator(context: df.DurableOrchestrationContext):
