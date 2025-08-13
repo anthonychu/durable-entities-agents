@@ -1,14 +1,16 @@
 import asyncio
+import json
 import logging
-from typing import Any
 import uuid
-from agents import Agent, RunResult, Runner
-from agents.mcp.server import MCPServer
+from typing import Any
+
 import azure.functions as func
 import azure.durable_functions as df
 from azure.durable_functions.models import TaskBase
+
+from agents import Agent, RunResult, Runner
+from agents.mcp.server import MCPServer
 from .sessions import InMemorySession
-import json
 
 
 _agents:dict[str, Agent] | None = None

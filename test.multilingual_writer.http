@@ -1,0 +1,19 @@
+
+###
+# Call an agent directly
+
+POST http://localhost:7071/api/run_agent/english_paragraph_writer_agent/1234
+Content-Type: application/json
+
+"write a paragraph about traveling to seattle"
+
+
+
+###
+# Start an orchestration to recommend a travel destination and create an itinerary
+# Poll the status URL until it's done
+
+POST http://localhost:7071/runtime/webhooks/durabletask/orchestrators/multilingual_writer_orchestrator
+Content-Type: application/json
+
+"\"write a paragraph about traveling to seattle\""

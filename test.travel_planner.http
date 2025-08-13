@@ -1,26 +1,26 @@
 
+###
+# Call an agent directly
+
 POST http://localhost:7071/api/run_agent/destination_expert_agent/1234
 Content-Type: application/json
 
 "i want to go somewhere warm"
 
+
 ###
+# Call the same agent session again
 
 POST http://localhost:7071/api/run_agent/destination_expert_agent/1234
 Content-Type: application/json
 
-"we have kids and not made of money"
+"we have kids and aren't made of money"
 
-###
-
-POST http://localhost:7071/api/run_agent/destination_expert_agent/1235
-Content-Type: application/json
-
-""
 
 
 ###
-# Start an orchestration to write a paragraph in a few languages
+# Start an orchestration to recommend a travel destination and create an itinerary
+# Poll the status URL until approval status is pending
 
 POST http://localhost:7071/runtime/webhooks/durabletask/orchestrators/travel_planner_orchestrator
 Content-Type: application/json
@@ -29,8 +29,10 @@ Content-Type: application/json
 
 
 ###
+# Call the orchestration's raise event API (replace event name with `approval_event`)
 
-POST http://localhost:7071/runtime/webhooks/durabletask/instances/c3e7a99997a940c197ad52ef230d62f3/raiseEvent/approval_event?taskHub=TestHubName&connection=Storage
+POST http://localhost:7071/runtime/webhooks/durabletask/instances/8f234aea121749d38fde41eb9df5acb5/raiseEvent/approval_event?taskHub=TestHubName&connection=Storage
 Content-Type: application/json
 
 "approved"
+

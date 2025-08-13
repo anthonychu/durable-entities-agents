@@ -21,15 +21,9 @@ Content-Type: application/json
 
 "And France?"
 
-###
-# Start an orchestration to write a paragraph in a few languages
-
-POST http://localhost:7071/runtime/webhooks/durabletask/orchestrators/multilingual_writer_orchestrator
-Content-Type: application/json
-
-"\"things to do in seattle\""
 
 ###
+# Call weather agent (will use MCP server)
 
 POST http://localhost:7071/api/run_agent/weather_agent/3456789
 Content-Type: application/json
@@ -38,6 +32,7 @@ Content-Type: application/json
 
 
 ###
+# Ask the same agent session a follow-up question
 
 POST http://localhost:7071/api/run_agent/weather_agent/3456789
 Content-Type: application/json

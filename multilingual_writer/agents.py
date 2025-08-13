@@ -1,8 +1,7 @@
 import os
 from agents import Agent, OpenAIChatCompletionsModel, set_tracing_disabled
 from openai import AsyncAzureOpenAI
-from azure.identity.aio import DefaultAzureCredential
-from azure.identity.aio import get_bearer_token_provider
+from azure.identity.aio import DefaultAzureCredential, get_bearer_token_provider
 
 set_tracing_disabled(disabled=True)
 

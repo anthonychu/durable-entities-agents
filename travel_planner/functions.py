@@ -1,12 +1,10 @@
 import json
-import logging
 from durable_entities_agents import run_agent
 import azure.durable_functions as df
 
 bp = df.Blueprint()
 
 # Orchestration of multiple agents
-# Write a paragraph in English and fan out to translate to French and Spanish
 @bp.orchestration_trigger(context_name="context")
 def travel_planner_orchestrator(context: df.DurableOrchestrationContext):
     input = context.get_input()
