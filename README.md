@@ -15,7 +15,7 @@ A light-weight SDK for running distributed, stateful OpenAI Agents SDK agents on
 - **Multi-Agent Orchestration**: Compose multiple stateful agents into complex workflows using Durable Functions orchestrations.
 - **Human-in-the-Loop**: See travel planner for an approval workflow.
 
-## Development
+## Usage Overview
 
 ### Adding New Agents
 
@@ -23,7 +23,7 @@ A light-weight SDK for running distributed, stateful OpenAI Agents SDK agents on
 
     ```python
     from agents import Agent
-    
+
     haiku_agent = Agent(
         name="Haiku agent",
         instructions="You are a haiku poet. Respond to the user's question with a haiku.",
