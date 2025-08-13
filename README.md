@@ -10,7 +10,7 @@ A light-weight SDK for running distributed, stateful OpenAI Agents SDK agents on
 ## Features
 
 - **OpenAI Agents SDK** integration: Build agents using the OpenAI Agents SDK.
-- **Stateful AI Agents**: Agent conversation (sessions) state is automatically maintained. Each conversation with an agent is backed by a durable entity but no knowledge of Durable Functions is needed.
+- **Stateful AI Agents**: Agent conversation (session) state is automatically maintained. Each conversation with an agent is backed by a durable entity but no knowledge of Durable Functions is needed.
 - **RESTful API**: Includes simple, built-in HTTP endpoints for interacting with agents.
 - **Multi-Agent Orchestration**: Compose multiple stateful agents into complex workflows using Durable Functions orchestrations.
 - **Human-in-the-Loop**: See travel planner for an approval workflow.
@@ -312,16 +312,3 @@ POST http://localhost:7071/api/run_agent/haiku_agent/session123
 "What about the country to the south?"
 ```
 
-## Architecture
-
-- **Azure Functions**: Serverless compute platform
-- **Durable Entities**: Stateful entities for agent session management
-- **Durable Orchestrations**: Workflow coordination for multi-agent scenarios
-- **OpenAI Agents SDK**: AI agent framework with OpenAI integration
-
-### Logs
-
-Check function logs for detailed error information:
-```bash
-func start --verbose
-```
