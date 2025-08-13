@@ -124,7 +124,7 @@ To orchestrate multiple agents, use a standard Durable Functions orchestration w
         }
     ```
 
-3. Start an orchestration function using the built-in Durable Functions HTTP endpoint:
+3. Start an orchestration using the built-in Durable Functions HTTP endpoint:
 
     ```http
     POST http://localhost:7071/runtime/webhooks/durabletask/orchestrators/multilingual_writer_orchestrator
