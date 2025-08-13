@@ -1,9 +1,8 @@
 import azure.functions as func
-import azure.durable_functions as df
-from durable_entity_agents import run_agent, add_agents
-from my_agents import haiku_agent, english_paragraph_writer_agent, french_translator_agent, spanish_translator_agent, weather_agent
-
-
+from durable_entities_agents import add_agents
+from basic_agents import haiku_agent, weather_agent
+from multilingual_writer.agents import english_paragraph_writer_agent, french_translator_agent, spanish_translator_agent
+from multilingual_writer.functions import bp as multilingual_writer_functions
 app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
 
@@ -19,22 +18,4 @@ add_agents(app, agents={
 })
 
 
-# Orchestration of multiple agents
-# Write a paragraph in English and fan out to translate to French and Spanish
-@app.orchestration_trigger(context_name="context")
-def multilingual_writer_orchestrator(context: df.DurableOrchestrationContext):
-    input = context.get_input()
-    if not input:
-        raise Exception("Input missing")
-    
-    english = yield run_agent(context, agent_name="english_paragraph_writer_agent", input=input)
-
-    french_task = run_agent(context, agent_name="french_translator_agent", input=english)
-    spanish_task = run_agent(context, agent_name="spanish_translator_agent", input=english)
-    [french, spanish] = yield context.task_all([french_task, spanish_task])
-
-    return {
-        "english": english,
-        "french": french,
-        "spanish": spanish,
-    }
+app.register_functions(multilingual_writer_functions)

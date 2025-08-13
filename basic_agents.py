@@ -28,26 +28,6 @@ haiku_agent = Agent(
     model=model
 )
 
-
-english_paragraph_writer_agent = Agent(
-    name="English Paragraph Writer Agent",
-    instructions="You are an expert paragraph writer. Write a detailed paragraph based on the user's input.",
-    model=model
-)
-
-french_translator_agent = Agent(
-    name="French Translator Agent",
-    instructions="You are a French translator. Translate the user's input into French.",
-    model=model
-)
-
-spanish_translator_agent = Agent(
-    name="Spanish Translator Agent",
-    instructions="You are a Spanish translator. Translate the user's input into Spanish.",
-    model=model
-)
-
-
 _weather_mcp = MCPServerStreamableHttp(
     params={
         "url": os.getenv("WEATHER_MCP_URL", ""),
