@@ -1,5 +1,6 @@
 import asyncio
 import logging
+from typing import Any
 import uuid
 from agents import Agent, RunResult, Runner
 from agents.mcp.server import MCPServer
@@ -7,6 +8,7 @@ import azure.functions as func
 import azure.durable_functions as df
 from azure.durable_functions.models import TaskBase
 from .sessions import InMemorySession
+import json
 
 
 _agents:dict[str, Agent] | None = None
@@ -42,7 +44,10 @@ def agent(context: df.DurableEntityContext) -> None:
         
         session_data = state.get("session_data", [])
         session = InMemorySession(session_data)
-        input = context.get_input() or ""
+        input = context.get_input()
+
+        if not isinstance(input, str):
+            input = json.dumps(input)
 
         result = asyncio.run(_run_agent(agent, input, session=session))
         logging.info(f"Operation result: {result.final_output}")
@@ -100,7 +105,7 @@ async def agent_run_http(req: func.HttpRequest, client: df.DurableOrchestrationC
 
 
 # Helper function for calling an agent entity's run operation
-def run_agent(ctx: df.DurableOrchestrationContext, agent_name: str = '', session_id: str = '', input: str = '') -> TaskBase:
+def run_agent(ctx: df.DurableOrchestrationContext, agent_name: str = '', session_id: str = '', input: Any | None = None) -> TaskBase:
     if not session_id:
         session_id = str(uuid.uuid4())
     entity_id = df.EntityId("Agent", f"{agent_name}--{session_id}")

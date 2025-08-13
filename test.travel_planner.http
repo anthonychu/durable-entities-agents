@@ -1,0 +1,36 @@
+
+POST http://localhost:7071/api/run_agent/destination_expert_agent/1234
+Content-Type: application/json
+
+"i want to go somewhere warm"
+
+###
+
+POST http://localhost:7071/api/run_agent/destination_expert_agent/1234
+Content-Type: application/json
+
+"we have kids and not made of money"
+
+###
+
+POST http://localhost:7071/api/run_agent/destination_expert_agent/1235
+Content-Type: application/json
+
+""
+
+
+###
+# Start an orchestration to write a paragraph in a few languages
+
+POST http://localhost:7071/runtime/webhooks/durabletask/orchestrators/travel_planner_orchestrator
+Content-Type: application/json
+
+"{\"specialRequirements\":\"somewhere warm\"}"
+
+
+###
+
+POST http://localhost:7071/runtime/webhooks/durabletask/instances/c3e7a99997a940c197ad52ef230d62f3/raiseEvent/approval_event?taskHub=TestHubName&connection=Storage
+Content-Type: application/json
+
+"approved"
