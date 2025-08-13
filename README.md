@@ -1,27 +1,27 @@
 # Durable Entities Agents
 
-A light-weight SDK for running OpenAI Agents SDK agents on Azure Functions.
+A light-weight SDK for running distributed, stateful OpenAI Agents SDK agents on Azure Functions.
 
 ## Main goals
 
-- Build agents using the OpenAI Agents SDK
-- Run agents on Azure Functions with built-in conversation state management, without extensive knowledge of Azure Functions
+- Build agents using the OpenAI Agents SDK and run them on Azure Functions with built-in serverless scale and conversation state management, without extensive knowledge of Azure Functions
 - Compose agents into complex workflows with Durable Functions orchestrations
 
 ## Features
 
-- **OpenAI Agents SDK** integration: Build agents using the OpenAI Agents SDK and run them on the Azure Functions platform.
-- **Stateful AI Agents**: Conversation (sessions) state is automatically maintained. Each conversation (session) with an agent is backed by a durable entity but no knowledge of Durable Functions is needed.
-- **RESTful API**: Includes simple HTTP endpoints for interacting with agents.
+- **OpenAI Agents SDK** integration: Build agents using the OpenAI Agents SDK.
+- **Stateful AI Agents**: Agent conversation (sessions) state is automatically maintained. Each conversation with an agent is backed by a durable entity but no knowledge of Durable Functions is needed.
+- **RESTful API**: Includes simple, built-in HTTP endpoints for interacting with agents.
 - **Multi-Agent Orchestration**: Compose multiple stateful agents into complex workflows using Durable Functions orchestrations.
-- **MCP Server Integration**: Works with MCP servers. See weather agent for details.
 - **Human-in-the-Loop**: See travel planner for an approval workflow.
 
 ## Sample Application
 
 A sample Azure Functions application demonstrating AI agents using Azure Durable Entities for state management and session persistence. The project showcases three different agent scenarios:
 
-1. **Basic Agents** - Simple haiku poet and weather information agents
+1. **Basic Agents**
+    - A simple haiku poet
+    - A weather information agent using a remote weather MCP server
 2. **Multilingual Writer** - Orchestrated workflow that writes content in English and translates to French and Spanish
 3. **Travel Planner** - Multi-agent travel planning system with human approval workflow
 
@@ -162,22 +162,6 @@ For the travel planner, you'll need to:
 2. Wait for it to reach approval status `pending`
 3. Send approval using the raise event API with your instance ID
 
-## Available Agents
-
-### Basic Agents
-- **haiku_agent**: Responds to questions with haiku poems
-- **weather_agent**: Provides weather information using MCP server
-
-### Multilingual Writer Agents
-- **english_paragraph_writer_agent**: Writes paragraphs in English
-- **french_translator_agent**: Translates text to French
-- **spanish_translator_agent**: Translates text to Spanish
-
-### Travel Planner Agents
-- **destination_expert_agent**: Recommends travel destinations
-- **itinerary_planner_agent**: Creates detailed travel itineraries
-- **local_recommendations_agent**: Suggests local activities and attractions
-
 ## Session (Conversation State) Management
 
 Each agent maintains conversation state per session ID. A single conversation (session) with an agent is backed by a durable entity. Use the same session ID across requests to maintain context:
@@ -198,7 +182,6 @@ POST http://localhost:7071/api/run_agent/haiku_agent/session123
 - **Durable Entities**: Stateful entities for agent session management
 - **Durable Orchestrations**: Workflow coordination for multi-agent scenarios
 - **OpenAI Agents SDK**: AI agent framework with OpenAI integration
-- **MCP (Model Context Protocol)**: External data integration for agents
 
 ## Development
 
@@ -220,18 +203,67 @@ POST http://localhost:7071/api/run_agent/haiku_agent/session123
 
 ### Adding New Agents
 
-1. Define your agent in the appropriate module
+1. Build an agent using the OpenAI Agents SDK
+
+    ```python
+    haiku_agent = Agent(
+        name="Haiku agent",
+        instructions="You are a haiku poet. Respond to the user's question with a haiku.",
+        model=model
+    )
+    ```
+
 2. Register it in `function_app.py`
-3. Create test cases in a new `.http` file
 
-## Troubleshooting
+    ```python
+    import azure.functions as func
+    from durable_entities_agents import add_agents
 
-### Common Issues
+    app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
-1. **Storage Connection Error**: Ensure Azurite is running on ports 10000-10002
-2. **OpenAI Authentication Error**: Verify `AZURE_OPENAI_ENDPOINT` and Azure login
-3. **Weather Agent Fails**: Check `WEATHER_MCP_URL` configuration
-4. **Timeout Errors**: Increase timeout in orchestrator or use background processing
+    add_agents(app, agents={
+        "haiku_agent": haiku_agent,
+    })
+    ```
+
+    This will:
+    - Register the agent with the function app
+    - Add the necessary Durable Functions and Durable Entities behind the scenes. Also enables
+    - Enable an HTTP endpoint for interacting with the agent
+
+3. Call the agent in a session called `session123` using the HTTP built-in endpoint:
+
+    ```http
+    POST http://localhost:7071/api/run_agent/haiku_agent/session123
+    Content-Type: application/json
+
+    "What's the capital of Canada?"
+    ```
+
+    Sample response:
+
+    ```
+    Ottawa gleams bright,
+    Parliament Hill stands so tall,
+    Capital's heartbeat.
+    ```
+
+4. Make a follow-up request in the same session:
+
+    ```http
+    POST http://localhost:7071/api/run_agent/haiku_agent/session123
+    Content-Type: application/json
+
+    "What about the country to the south?"
+    ```
+
+    Sample response:
+
+    ```
+    D.C. stands proudly,
+    White House beneath cherry blooms,
+    Democracy's home.
+    ```
 
 ### Logs
 
