@@ -4,7 +4,7 @@ import azure.durable_functions as df
 
 bp = df.Blueprint()
 
-# Orchestration of multiple agents
+# Orchestration of multiple agents with human approval
 @bp.orchestration_trigger(context_name="context")
 def travel_planner_orchestrator(context: df.DurableOrchestrationContext):
     input = context.get_input()
