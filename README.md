@@ -312,3 +312,7 @@ POST http://localhost:7071/api/run_agent/haiku_agent/session123
 "What about the country to the south?"
 ```
 
+## Limitations
+
+- The unit of durability is a call to `Runner.run()`; the internal calls such as calls to the LLM or tools are not individually checkpointed.
+- For agents that hand-off to other agents, the state is only persisted for the top level agent.
