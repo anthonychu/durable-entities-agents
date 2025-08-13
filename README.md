@@ -124,6 +124,17 @@ To orchestrate multiple agents, use a standard Durable Functions orchestration w
         }
     ```
 
+3. Start an orchestration function using the built-in Durable Functions HTTP endpoint:
+
+    ```http
+    POST http://localhost:7071/runtime/webhooks/durabletask/orchestrators/multilingual_writer_orchestrator
+    Content-Type: application/json
+
+    "\"write a paragraph about traveling to seattle\""
+    ```
+
+4. Open the status endpoint and poll it to check the progress.
+
 ## Sample Application
 
 A sample Azure Functions application demonstrating AI agents using Azure Durable Entities for state management and session persistence. The project showcases three different agent scenarios:

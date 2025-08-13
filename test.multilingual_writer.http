@@ -10,7 +10,7 @@ Content-Type: application/json
 
 
 ###
-# Start an orchestration to recommend a travel destination and create an itinerary
+# Start an orchestration to generate a paragraph about Seattle and translate it into multiple languages
 # Poll the status URL until it's done
 
 POST http://localhost:7071/runtime/webhooks/durabletask/orchestrators/multilingual_writer_orchestrator
