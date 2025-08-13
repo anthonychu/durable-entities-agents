@@ -19,7 +19,7 @@ A light-weight SDK for running distributed, stateful OpenAI Agents SDK agents on
 
 ### Adding New Agents
 
-For a single agent, almost no knowledge of Azure Functions is needed.
+For a single agent, almost no knowledge of Azure Functions is needed to make it serverless and stateful.
 
 1. Build an agent using the OpenAI Agents SDK
 
