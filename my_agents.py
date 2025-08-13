@@ -1,4 +1,3 @@
-import asyncio
 import os
 from agents import Agent, OpenAIChatCompletionsModel, set_tracing_disabled
 from agents.mcp import MCPServerStreamableHttp
@@ -63,4 +62,3 @@ weather_agent = Agent(
     model=model,
     mcp_servers=[_weather_mcp],
 )
-
