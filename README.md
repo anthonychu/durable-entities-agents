@@ -48,7 +48,7 @@ For a single agent, almost no knowledge of Azure Functions is needed to make it 
 
     This will:
     - Register the agent with the function app
-    - Add the necessary Durable Functions and Durable Entities behind the scenes. Also enables
+    - Add the necessary Durable Functions and Durable Entities behind the scenes.
     - Enable an HTTP endpoint for interacting with the agent
 
 3. Call the agent using the HTTP built-in endpoint. Specify the conversation session ID. If the session doesn't exist, it'll automatically create one:
