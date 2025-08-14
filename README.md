@@ -276,7 +276,7 @@ Open `test.multilingual_writer.http`:
 POST http://localhost:7071/runtime/webhooks/durabletask/orchestrators/multilingual_writer_orchestrator
 Content-Type: application/json
 
-"write a paragraph about traveling to seattle"
+"\"write a paragraph about traveling to seattle\""
 ```
 
 This will return a status URL that you can poll to get the final result with English, French, and Spanish versions.
@@ -290,13 +290,20 @@ Open `test.travel_planner.http`:
 POST http://localhost:7071/runtime/webhooks/durabletask/orchestrators/travel_planner_orchestrator
 Content-Type: application/json
 
-{"specialRequirements":"somewhere warm"}
+"{\"specialRequirements\":\"somewhere warm\"}"
 ```
 
 For the travel planner, you'll need to:
 1. Start the orchestration (get instance ID from response)
 2. Wait for it to reach approval status `pending`
 3. Send approval using the raise event API with your instance ID
+
+```http
+POST http://localhost:7071/runtime/webhooks/durabletask/instances/8f234aea121749d38fde41eb9df5acb5/raiseEvent/approval_event?taskHub=TestHubName&connection=Storage
+Content-Type: application/json
+
+"approved"
+```
 
 ## Session (Conversation State) Management
 
@@ -305,10 +312,12 @@ Each agent maintains conversation state per session ID. A single conversation (s
 ```http
 # First request
 POST http://localhost:7071/api/run_agent/haiku_agent/session123
+
 "What's the capital of Canada?"
 
 # Follow-up request (maintains context)
 POST http://localhost:7071/api/run_agent/haiku_agent/session123
+
 "What about the country to the south?"
 ```
 
