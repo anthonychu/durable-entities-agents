@@ -1,0 +1,8 @@
+###
+# Start an orchestration to get the weather in multiple cities
+# Poll the status URL until it's done
+
+POST http://localhost:7071/runtime/webhooks/durabletask/orchestrators/multi_sdk_weather_agents_orchestrator
+Content-Type: application/json
+
+"{\"city1\": \"NYC\", \"city2\": \"Seattle\"}"

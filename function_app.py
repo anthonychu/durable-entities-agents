@@ -6,6 +6,7 @@ from multilingual_writer.agents import english_paragraph_writer_agent, french_tr
 from multilingual_writer.functions import bp as multilingual_writer_functions
 from travel_planner.agents import destination_expert_agent, itinerary_planner_agent, local_recommendations_agent
 from travel_planner.functions import bp as travel_planner_functions
+from multi_sdk_agents.functions import bp as multi_sdk_agents_functions
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
@@ -32,3 +33,4 @@ add_pydanticai_agents(app, agents={
 
 app.register_functions(multilingual_writer_functions)
 app.register_functions(travel_planner_functions)
+app.register_functions(multi_sdk_agents_functions)
