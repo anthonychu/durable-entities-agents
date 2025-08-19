@@ -253,7 +253,7 @@ Open `test.basic.http` and run the requests:
 
 ```http
 # Test haiku agent
-POST http://localhost:7071/api/run_agent/haiku_agent/12345
+POST http://localhost:7071/api/run_agent/openai_haiku_agent/12345
 Content-Type: application/json
 
 "What's the capital of Canada?"
@@ -261,7 +261,7 @@ Content-Type: application/json
 
 ```http
 # Test weather agent (requires MCP server)
-POST http://localhost:7071/api/run_agent/weather_agent/3456789
+POST http://localhost:7071/api/run_agent/openai_weather_agent/3456789
 Content-Type: application/json
 
 "how warm is it in seattle?"
@@ -311,12 +311,12 @@ Each agent maintains conversation state per session ID. A single conversation (s
 
 ```http
 # First request
-POST http://localhost:7071/api/run_agent/haiku_agent/session123
+POST http://localhost:7071/api/run_agent/openai_haiku_agent/session123
 
 "What's the capital of Canada?"
 
 # Follow-up request (maintains context)
-POST http://localhost:7071/api/run_agent/haiku_agent/session123
+POST http://localhost:7071/api/run_agent/openai_haiku_agent/session123
 
 "What about the country to the south?"
 ```

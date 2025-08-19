@@ -1,6 +1,6 @@
 # Make a call to an agent by the agent name and a session ID
 
-POST http://localhost:7071/api/run_agent/haiku_agent/12345
+POST http://localhost:7071/api/run_agent/openai_haiku_agent/12345
 Content-Type: application/json
 
 "What's the capital of Canada?"
@@ -9,14 +9,14 @@ Content-Type: application/json
 
 # Subsequent calls to the same agent session maintains history
 
-POST http://localhost:7071/api/run_agent/haiku_agent/12345
+POST http://localhost:7071/api/run_agent/openai_haiku_agent/12345
 Content-Type: application/json
 
 "What about the country to the south?"
 
 ###
 
-POST http://localhost:7071/api/run_agent/haiku_agent/12345
+POST http://localhost:7071/api/run_agent/openai_haiku_agent/12345
 Content-Type: application/json
 
 "And France?"
@@ -25,7 +25,7 @@ Content-Type: application/json
 ###
 # Call weather agent (will use MCP server)
 
-POST http://localhost:7071/api/run_agent/weather_agent/3456789
+POST http://localhost:7071/api/run_agent/openai_weather_agent/3456789
 Content-Type: application/json
 
 "how warm is it in seattle?"
@@ -34,7 +34,7 @@ Content-Type: application/json
 ###
 # Ask the same agent session a follow-up question
 
-POST http://localhost:7071/api/run_agent/weather_agent/3456789
+POST http://localhost:7071/api/run_agent/openai_weather_agent/3456789
 Content-Type: application/json
 
 "in celsius?"

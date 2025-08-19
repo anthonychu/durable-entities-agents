@@ -4,3 +4,4 @@ aiohttp
 python-dotenv
 azure-functions
 azure-functions-durable
+pydantic-ai>=0.7.2

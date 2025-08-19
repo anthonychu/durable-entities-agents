@@ -1,0 +1,17 @@
+
+###
+# Call weather agent (will use MCP server)
+
+POST http://localhost:7071/api/run_agent/pydanticai_weather_agent/3456789
+Content-Type: application/json
+
+"how warm is it in seattle?"
+
+
+###
+# Ask the same agent session a follow-up question
+
+POST http://localhost:7071/api/run_agent/pydanticai_weather_agent/3456789
+Content-Type: application/json
+
+"in celsius?"
