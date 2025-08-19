@@ -22,7 +22,7 @@ model = OpenAIChatCompletionsModel(
     openai_client=client,
 )
 
-haiku_agent = Agent(
+openai_haiku_agent = Agent(
     name="Haiku agent",
     instructions="You are a haiku poet. Respond to the user's question with a haiku.",
     model=model
@@ -36,7 +36,7 @@ _weather_mcp = MCPServerStreamableHttp(
     client_session_timeout_seconds=60,
 )
 
-weather_agent = Agent(
+openai_weather_agent = Agent(
     name="Weather Agent",
     instructions="You are an expert in weather information.",
     model=model,
